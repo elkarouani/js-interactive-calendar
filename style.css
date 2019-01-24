@@ -15,3 +15,7 @@ td:hover {
 	cursor: pointer;
 	background-color: #42e2f4;
 }
+
+.active {
+	background-color: #8cf442;
+}
