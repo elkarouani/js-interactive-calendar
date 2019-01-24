@@ -1,0 +1,5 @@
+• Steps :
+1 - Drawing calendar shape
+2 - adding dates on each cell
+3 - adding navigation buttons for the year and month
+4 - working on insert events on each cell
