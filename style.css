@@ -4,10 +4,9 @@ table {
 	width: 15rem;
 }
 
-tr {
-
-}
-
 td {
 	border: 1px solid black;
+	height: 2rem;
+	width: 2rem;
+	text-align: center;
 }
