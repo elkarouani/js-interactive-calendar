@@ -10,3 +10,8 @@ td {
 	width: 2rem;
 	text-align: center;
 }
+
+td:hover {
+	cursor: pointer;
+	background-color: #42e2f4;
+}

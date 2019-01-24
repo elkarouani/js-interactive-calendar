@@ -122,6 +122,15 @@ inputYear.addEventListener('change', (event) => {
 	}
 })
 
+for (let i = 0; i < 6; i++) {
+	let row = tableRows[i];
+	for (let j = 0; j <= 6; j++) {
+		let cell = row.children[j];
 
+		cell.addEventListener('click', (event) => {
+			console.log((i + 1) + " and " + (j + 1));
+		})
+	}
+}
 
 
