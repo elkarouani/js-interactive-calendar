@@ -22,33 +22,23 @@ let generatorDatesArray = (monthNum, monthIndex, yearNum) => {
 	let datesArray = getDatesArray();
 
 	let yIndex = 0;
-	for (let i = 1; i <= daysCount; i++) {
-		switch (new Date(yearNum, monthIndex, i).getDay()) {
-			case 0:
-				datesArray[yIndex][0] = new Date(yearNum, monthIndex, i).getDate();
-				break;
-			case 1:
-				datesArray[yIndex][1] = new Date(yearNum, monthIndex, i).getDate();
-				break;
-			case 2:
-				datesArray[yIndex][2] = new Date(yearNum, monthIndex, i).getDate();
-				break;
-			case 3:
-				datesArray[yIndex][3] = new Date(yearNum, monthIndex, i).getDate();
-				break;
-			case 4:
-				datesArray[yIndex][4] = new Date(yearNum, monthIndex, i).getDate();
-				break;
-			case 5:
-				datesArray[yIndex][5] = new Date(yearNum, monthIndex, i).getDate();
-				break;
-			case 6:
-				datesArray[yIndex][6] = new Date(yearNum, monthIndex, i).getDate();
-				yIndex++;
-				break;
-		}
-	}
 
+	for (let i = 1; i <= daysCount; i++) {
+		let switchDate = new Date(yearNum, monthIndex, i).getDay();
+	
+		const funSwitch = (switchDate) => ({
+		  0: new Function('yIndex', 'datesArray', 'i', "datesArray[0] = new Date(yearNum, monthIndex, i).getDate(); return yIndex;"),
+		  1: new Function('yIndex', 'datesArray', 'i', "datesArray[1] = new Date(yearNum, monthIndex, i).getDate(); return yIndex;"),
+		  2: new Function('yIndex', 'datesArray', 'i', "datesArray[2] = new Date(yearNum, monthIndex, i).getDate(); return yIndex;"),
+		  3: new Function('yIndex', 'datesArray', 'i', "datesArray[3] = new Date(yearNum, monthIndex, i).getDate(); return yIndex;"),
+		  4: new Function('yIndex', 'datesArray', 'i', "datesArray[4] = new Date(yearNum, monthIndex, i).getDate(); return yIndex;"),
+		  5: new Function('yIndex', 'datesArray', 'i', "datesArray[5] = new Date(yearNum, monthIndex, i).getDate(); return yIndex;"),
+		  6: new Function('yIndex', 'datesArray', 'i', "datesArray[6] = new Date(yearNum, monthIndex, i).getDate(); yIndex++; return yIndex;")
+		})[switchDate];
+
+		yIndex = funSwitch(switchDate)(yIndex, datesArray[yIndex], i);
+	}
+	
 	return datesArray;
 };
 let pushDatesArray = (datesArray) => {
