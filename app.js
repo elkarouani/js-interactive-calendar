@@ -1,22 +1,21 @@
-// Dom variables
+// DOM and App variables
 const inputMonth = document.getElementById("monthInput");
 const inputYear = document.getElementById("yearInput");
 const table = document.getElementById('Table');
 const eventContent = document.getElementById('eventContent');
 const tableRows = table.children[0].children;
-
-let range1 = Array.from({length: 6}, (v, i) => i);
-let range2 = Array.from({length: 7}, (v, i) => i);
-let equals = (date1, date2) => {
+const range1 = Array.from({length: 6}, (v, i) => i);
+const range2 = Array.from({length: 7}, (v, i) => i);
+const equals = (date1, date2) => {
 	return (date1.getFullYear() == date2.getFullYear() &&
 	 		date1.getMonth() == date2.getMonth() &&
 	 		date1.getDate() == date2.getDate()) 
 			? true : false;
 };
-let events = { 1 : {content: "Concert", year: 2019, month: 1, day: 24},
+const events = { 1 : {content: "Concert", year: 2019, month: 1, day: 24},
 			  2 : {content: "Theatre", year: 2019, month: 1, day: 18}
 			};
-let getDatesArray = () => { return [
+const getDatesArray = () => { return [
 	[[], [], [], [], [], [], []],
 	[[], [], [], [], [], [], []],
 	[[], [], [], [], [], [], []], 
@@ -25,7 +24,7 @@ let getDatesArray = () => { return [
 	[[], [], [], [], [], [], []]
 	];
 };
-let generatorDatesArray = (monthNum, monthIndex, yearNum) => {
+const generatorDatesArray = (monthNum, monthIndex, yearNum) => {
 	let daysCount = new Date(yearNum, monthNum, 0).getDate(); 
 	let datesArray = getDatesArray();
 	let yIndex = 0;
@@ -49,7 +48,7 @@ let generatorDatesArray = (monthNum, monthIndex, yearNum) => {
 
 	return datesArray;
 };
-let pushDatesArray = (datesArray) => {
+const pushDatesArray = (datesArray) => {
 	for (let i in range1) {
 		let row = tableRows[i];
 		for (let j in range2) {
@@ -59,6 +58,7 @@ let pushDatesArray = (datesArray) => {
 	}
 };
 
+// Events Bloc
 document.addEventListener('change', (event) => {
 	if ( event.target == inputMonth || event.target == inputYear) {
         // Get dates array structure
@@ -81,6 +81,7 @@ document.addEventListener('change', (event) => {
     }
 })
 
+// Bloc for events displayer
 for (let i in range1) {
 	let row = tableRows[i];
 
