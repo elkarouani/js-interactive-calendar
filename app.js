@@ -4,6 +4,15 @@ const inputYear = document.getElementById("yearInput");
 const table = document.getElementById('Table');
 const eventContent = document.getElementById('eventContent');
 const tableRows = table.children[0].children;
+
+let range1 = Array.from({length: 6}, (v, i) => i);
+let range2 = Array.from({length: 7}, (v, i) => i);
+let equals = (date1, date2) => {
+	return (date1.getFullYear() == date2.getFullYear() &&
+	 		date1.getMonth() == date2.getMonth() &&
+	 		date1.getDate() == date2.getDate()) 
+			? true : false;
+};
 let events = { 1 : {content: "Concert", year: 2019, month: 1, day: 24},
 			  2 : {content: "Theatre", year: 2019, month: 1, day: 18}
 			};
@@ -18,12 +27,11 @@ let getDatesArray = () => { return [
 };
 let generatorDatesArray = (monthNum, monthIndex, yearNum) => {
 	let daysCount = new Date(yearNum, monthNum, 0).getDate(); 
-
 	let datesArray = getDatesArray();
-
 	let yIndex = 0;
+	let range = Array.from({length: daysCount}, (v, i) => (i+1));
 
-	for (let i = 1; i <= daysCount; i++) {
+	for (let i of range) {
 		let switchDate = new Date(yearNum, monthIndex, i).getDay();
 	
 		const funSwitch = (switchDate) => ({
@@ -38,13 +46,13 @@ let generatorDatesArray = (monthNum, monthIndex, yearNum) => {
 
 		yIndex = funSwitch(switchDate)(yIndex, datesArray[yIndex], i);
 	}
-	
+
 	return datesArray;
 };
 let pushDatesArray = (datesArray) => {
-	for (let i = 0; i < 6; i++) {
+	for (let i in range1) {
 		let row = tableRows[i];
-		for (let j = 0; j <= 6; j++) {
+		for (let j in range2) {
 			let cell = row.children[j];
 			cell.innerHTML = datesArray[i][j];
 		}
@@ -53,6 +61,7 @@ let pushDatesArray = (datesArray) => {
 
 document.addEventListener('change', (event) => {
 	if ( event.target == inputMonth || event.target == inputYear) {
+        // Get dates array structure
         let datesArray = getDatesArray();
 
 		// month number from user input
@@ -72,33 +81,21 @@ document.addEventListener('change', (event) => {
     }
 })
 
-for (let i = 0; i < 6; i++) {
+for (let i in range1) {
 	let row = tableRows[i];
-	for (let j = 0; j <= 6; j++) {
+
+	for (let j in range2) {
 		let cell = row.children[j];
 
 		cell.addEventListener('click', (e) => {
 			let day = parseInt(cell.innerHTML, 10);
-			clickedDate = new Date(yearNum, monthIndex, day);
-			
-			for (var i = 1; i <= Object.keys(events).length; i++) {
-				eventDate = new Date(events[i].year, (events[i].month - 1), events[i].day);
-				
-				equals = (date1, date2) => {
-					if (date1.getFullYear() == date2.getFullYear()) {
-						if (date1.getMonth() == date2.getMonth()) {
-							if (date1.getDate() == date2.getDate()) {
-								return true;
-							}
-						}
-					}else {
-						return false;
-					}
-				};
 
-				if (equals(clickedDate, eventDate) == true) {
-					eventContent.innerHTML = "<p>Event that day : " + events[i].content + "</p>";
-				}
+			let clickedDate = new Date(yearNum, monthIndex, day);
+			
+			for (let i = 1; i <= Object.keys(events).length; i++) {
+				let eventDate = new Date(events[i].year, (events[i].month - 1), events[i].day);				
+
+				if (equals(clickedDate, eventDate) == true) {eventContent.innerHTML = "<p>Event that day : " + events[i].content + "</p>";}
 			}
 		})
 	}
