@@ -4,12 +4,9 @@ const inputYear = document.getElementById("yearInput");
 const table = document.getElementById('Table');
 const eventContent = document.getElementById('eventContent');
 const tableRows = table.children[0].children;
-let event = { 1 : {content: "Concert", year: 2019, month: 1, day: 24},
+let events = { 1 : {content: "Concert", year: 2019, month: 1, day: 24},
 			  2 : {content: "Theatre", year: 2019, month: 1, day: 18}
 			};
-let monthNum = 1;
-let monthIndex = 0;
-let yearNum = 2019;
 let getDatesArray = () => { return [
 	[[], [], [], [], [], [], []],
 	[[], [], [], [], [], [], []],
@@ -64,33 +61,25 @@ let pushDatesArray = (datesArray) => {
 	}
 };
 
-inputMonth.addEventListener('change', (event) => {		
-	let datesArray = getDatesArray();
+document.addEventListener('change', (event) => {
+	if ( event.target == inputMonth || event.target == inputYear) {
+        let datesArray = getDatesArray();
 
-	// month number from user input
-	monthNum = parseInt(inputMonth.value, 10);
-	
-	// month index
-	monthIndex = monthNum - 1;
-	
-	// generate dates to dates array 
-	datesArray = generatorDatesArray(monthNum, monthIndex, yearNum);
-	
-	// Push dates array data to html table
-	pushDatesArray(datesArray);
-})
+		// month number from user input
+		monthNum = parseInt(inputMonth.value, 10);
+		
+		// month index
+		monthIndex = monthNum - 1;
 
-inputYear.addEventListener('change', (event) => {
-	let datesArray = getDatesArray();
-
-	// year number from user input
-	yearNum = parseInt(inputYear.value, 10);
-	
-	// generate dates to dates array 
-	datesArray = generatorDatesArray(monthNum, monthIndex, yearNum); 
-	
-	// Push dates array data to html table
-	pushDatesArray(datesArray);
+		// year number from user input
+		yearNum = parseInt(inputYear.value, 10);
+		
+		// generate dates to dates array 
+		datesArray = generatorDatesArray(monthNum, monthIndex, yearNum);
+		
+		// Push dates array data to html table
+		pushDatesArray(datesArray);
+    }
 })
 
 for (let i = 0; i < 6; i++) {
@@ -102,8 +91,8 @@ for (let i = 0; i < 6; i++) {
 			let day = parseInt(cell.innerHTML, 10);
 			clickedDate = new Date(yearNum, monthIndex, day);
 			
-			for (var i = 1; i <= Object.keys(event).length; i++) {
-				eventDate = new Date(event[i].year, (event[i].month - 1), event[i].day);
+			for (var i = 1; i <= Object.keys(events).length; i++) {
+				eventDate = new Date(events[i].year, (events[i].month - 1), events[i].day);
 				
 				equals = (date1, date2) => {
 					if (date1.getFullYear() == date2.getFullYear()) {
@@ -118,7 +107,7 @@ for (let i = 0; i < 6; i++) {
 				};
 
 				if (equals(clickedDate, eventDate) == true) {
-					eventContent.innerHTML = "<p>Event that day : " + event[i].content + "</p>";
+					eventContent.innerHTML = "<p>Event that day : " + events[i].content + "</p>";
 				}
 			}
 		})
