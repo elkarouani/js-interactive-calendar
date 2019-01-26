@@ -1,4 +1,6 @@
 // DOM and App variables
+let yearNum = new Date().getFullYear();
+let monthIndex = new Date().getMonth() - 1;
 const inputMonth = document.getElementById("monthInput");
 const inputYear = document.getElementById("yearInput");
 const table = document.getElementById('Table');
