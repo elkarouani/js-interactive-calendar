@@ -1,6 +1,6 @@
-// DOM and App variables
 let yearNum = new Date().getFullYear();
 let monthIndex = new Date().getMonth() - 1;
+// DOM and App variables
 const inputMonth = document.getElementById("monthInput");
 const inputYear = document.getElementById("yearInput");
 const table = document.getElementById('Table');
@@ -26,9 +26,8 @@ const getDatesArray = () => { return [
 	[[], [], [], [], [], [], []]
 	];
 };
-const generatorDatesArray = (monthNum, monthIndex, yearNum) => {
+const generatorDatesArray = (monthNum, monthIndex, yearNum, datesArray) => {
 	let daysCount = new Date(yearNum, monthNum, 0).getDate(); 
-	let datesArray = getDatesArray();
 	let yIndex = 0;
 	let range = Array.from({length: daysCount}, (v, i) => (i+1));
 
@@ -76,7 +75,7 @@ document.addEventListener('change', (event) => {
 		yearNum = parseInt(inputYear.value, 10);
 		
 		// generate dates to dates array 
-		datesArray = generatorDatesArray(monthNum, monthIndex, yearNum);
+		datesArray = generatorDatesArray(monthNum, monthIndex, yearNum, datesArray);
 		
 		// Push dates array data to html table
 		pushDatesArray(datesArray);
